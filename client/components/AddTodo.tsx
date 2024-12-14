@@ -32,7 +32,7 @@ function AddTodo() {
         className="mb-6 flex flex-col items-center gap-4"
         aria-labelledby="todo-form"
       >
-        <label htmlFor="task" id="todo-form" className="sr-only">
+        <label htmlFor="task" id="task-description" className="sr-only">
           Enter your task
         </label>
         <input
@@ -46,7 +46,7 @@ function AddTodo() {
           aria-describedby="task-description"
         />
         <div className="flex items-center gap-2">
-          <label htmlFor="priority" className="text-blue-600">
+          <label htmlFor="priority" className="text-blue-900">
             Priority:
           </label>
           <input
@@ -60,6 +60,7 @@ function AddTodo() {
           />
         </div>
         <button
+          id="todo-form"
           type="submit"
           disabled={!isFormValid}
           className={`w-full rounded-lg px-4 py-2 shadow-md ${

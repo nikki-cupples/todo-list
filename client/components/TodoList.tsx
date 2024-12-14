@@ -74,6 +74,13 @@ function TodoList() {
               }`}
             >
               <div className="flex items-center">
+                <label
+                  htmlFor={`toggle-${item.id}`}
+                  aria-labelledby={`toggle-${item.id}`}
+                  className="sr-only"
+                >
+                  Enter your task
+                </label>
                 <input
                   id={`toggle-${item.id}`}
                   className="mr-3 h-5 w-5"
@@ -102,7 +109,7 @@ function TodoList() {
                     </button>
                     <button
                       onClick={handleCancelEdit}
-                      className="m-2 text-red-500"
+                      className="m-2 text-[#B22222]"
                       aria-label="Cancel edit"
                     >
                       Cancel
@@ -124,7 +131,7 @@ function TodoList() {
               </div>
               <button
                 onClick={(e) => handleDelete(e, item.id)}
-                className="text-red-500"
+                className="text-[#B22222]"
                 aria-label={`Delete task: ${item.task}`}
               >
                 ❌
