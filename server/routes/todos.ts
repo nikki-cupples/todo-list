@@ -42,15 +42,14 @@ router.delete('/:id', async (req, res) => {
   }
 })
 
-
 // -- UPDATE TODO -- //
 // http://localhost:3000/api/v1/todos/:id
 
 router.put('/:id', async (req, res) => {
   const id = Number(req.params.id)
-  const {task, completed, priority} = req.body
+  const { task, completed, priority } = req.body
   try {
-    await updateTodo({id, task, completed, priority})
+    await updateTodo({ id, task, completed, priority })
     res.sendStatus(200)
   } catch (err) {
     res.sendStatus(500)
@@ -62,9 +61,9 @@ router.put('/:id', async (req, res) => {
 
 router.patch('/:id', async (req, res) => {
   const id = Number(req.params.id)
-  const {completed} = req.body
+  const { completed } = req.body
   try {
-    await checkOffTodo({id, completed})
+    await checkOffTodo({ id, completed })
     res.sendStatus(204)
   } catch (error) {
     res.sendStatus(500)
