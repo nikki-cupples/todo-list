@@ -4,9 +4,7 @@ function Footer() {
       <p className="text-sm">
         Made with ❤️ by <span className="font-bold">You</span>!
       </p>
-      <p className="mt-1 text-blue-700">
-        &copy; 2024 | Nikki Cupples
-      </p>
+      <p className="mt-1 text-blue-700">&copy; 2024 | Nikki Cupples</p>
       <ul className="flex flex-row justify-center">
         <li className="p-2 hover:text-[#00BFA6]">
           <a href="https://www.linkedin.com/in/nikkicupples/">Linked In</a>

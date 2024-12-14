@@ -21,13 +21,10 @@ export function useTodoList() {
 export function useAddTodo() {
   const client = useQueryClient()
 
-  //useMutation to add new todo to data
-  // specify what the data structure looks like
   return useMutation({
     mutationFn: async ({ todos }: { todos: TodoData }) => {
       await request.post('/api/v1/todos').send(todos)
     },
-    // on success, need to refresh all data
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ['todos'] })
     },
@@ -40,12 +37,10 @@ export function useAddTodo() {
 export function useDeleteTodo() {
   const client = useQueryClient()
 
-  // useMutation to delete todo data
   return useMutation({
     mutationFn: async (id: number) => {
       await request.delete(`/api/v1/todos/${id}`)
     },
-    // on success, need to refresh all data
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ['todos'] })
     },
