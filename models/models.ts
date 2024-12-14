@@ -1,6 +1,6 @@
 export interface TodoData {
   task: string
-  priority?: number
+  priority: number
   completed: boolean
 }
 

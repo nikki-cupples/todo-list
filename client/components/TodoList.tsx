@@ -1,4 +1,3 @@
-import { Outlet } from 'react-router-dom'
 import { DoneTodo, Todo } from '../../models/models'
 import {
   useTodoList,
@@ -18,7 +17,6 @@ function TodoList() {
   const [editingId, setEditingId] = useState<number | null>(null)
   const [updatedTask, setUpdatedTask] = useState<string>('')
 
-  // UPDATING OR DELETING A TASK
   const handleUpdate = (
     e: React.ChangeEvent<HTMLInputElement>,
     { id, completed }: DoneTodo,
@@ -35,14 +33,12 @@ function TodoList() {
     deleteTodo.mutate(Number(id))
   }
 
-  // EDITING A TASK
   const handleDoubleClick = (task: string, id: number) => {
     setEditingId(id)
     setUpdatedTask(task)
   }
 
   const handleSaveEdit = (todo: Todo) => {
-    // console.log('Save clicked', { task: updatedTask.trim() })
     if (updatedTask.trim() !== '') {
       updateTaskName.mutate({ ...todo, task: updatedTask.trim() })
     }
@@ -63,44 +59,35 @@ function TodoList() {
 
   return (
     <>
-      <ul className="todo-list">
+      <ul className="rounded-lg bg-white p-4 shadow-md">
         {data.data
-          // sort by priority
           .slice()
           .sort(
             (a: { priority: number }, b: { priority: number }) =>
               a.priority - b.priority,
           )
           .map((item: Todo) => (
-            // check off a completed todo task
-            <li key={item.id} className={item.completed ? 'completed' : ''}>
-              <div className="view">
-                <label
-                  htmlFor={`toggle-${item.id}`}
-                  id={`toggle-${item.id}`}
-                  className="sr-only"
-                >
-                  Mark as completed
-                </label>
+            <li
+              key={item.id}
+              className={`mb-2 flex items-center justify-between rounded p-2 ${
+                item.completed ? 'bg-blue-50' : 'bg-blue-100'
+              }`}
+            >
+              <div className="flex items-center">
                 <input
                   id={`toggle-${item.id}`}
-                  className="toggle"
+                  className="mr-3 h-5 w-5"
                   type="checkbox"
                   checked={item.completed}
                   onChange={(e) =>
-                    handleUpdate(e, {
-                      id: item.id,
-                      completed: item.completed,
-                    })
+                    handleUpdate(e, { id: item.id, completed: item.completed })
                   }
                   aria-checked={item.completed}
                 />
-
-                {/* editing a task name */}
                 {editingId === item.id ? (
                   <>
                     <input
-                      className="new-todo"
+                      className="w-full rounded border-2 border-blue-200 p-2 focus:outline-none focus:ring-2 focus:ring-blue-300"
                       type="text"
                       value={updatedTask}
                       onChange={(e) => setUpdatedTask(e.target.value)}
@@ -108,51 +95,43 @@ function TodoList() {
                     />
                     <button
                       onClick={() => handleSaveEdit(item)}
-                      style={{
-                        margin: '20px',
-                        color: 'green',
-                      }}
+                      className="m-2 text-green-500"
                       aria-label="Save edited task"
                     >
                       Save
                     </button>
                     <button
                       onClick={handleCancelEdit}
-                      style={{
-                        margin: '20px',
-                        color: 'red',
-                      }}
+                      className="m-2 text-red-500"
                       aria-label="Cancel edit"
                     >
                       Cancel
                     </button>
                   </>
                 ) : (
-                  <>
-                    <label
-                      htmlFor={`task-${item.id}`}
-                      onDoubleClick={() =>
-                        handleDoubleClick(item.task, item.id)
-                      }
-                      aria-label={`Double-click to edit task: ${item.task}`}
-                    >
-                      {item.task}
-                    </label>
-                    <input id={`task-${item.id}`} className="sr-only" />
-                  </>
+                  <span
+                    className={`text-lg ${
+                      item.completed
+                        ? 'text-gray-400 line-through'
+                        : 'text-blue-700'
+                    }`}
+                    onDoubleClick={() => handleDoubleClick(item.task, item.id)}
+                    aria-label={`Double-click to edit task: ${item.task}`}
+                  >
+                    {item.task}
+                  </span>
                 )}
-
-                {/* deleting a task */}
-                <button
-                  className="destroy"
-                  onClick={(e) => handleDelete(e, item.id)}
-                  aria-label={`Delete task: ${item.task}`}
-                ></button>
               </div>
+              <button
+                onClick={(e) => handleDelete(e, item.id)}
+                className="text-red-500"
+                aria-label={`Delete task: ${item.task}`}
+              >
+                ❌
+              </button>
             </li>
           ))}
       </ul>
-      <Outlet />
     </>
   )
 }
